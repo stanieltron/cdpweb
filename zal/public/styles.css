@@ -1,0 +1,391 @@
+@font-face {
+  font-family: 'nulshock';
+  src: url('nulshock bd.ttf') format('truetype');
+}
+
+:root {
+  --subtext-color: #777777; /* Define your color here */
+  --name-color: #931616;
+  --under-color: rgba(0, 200, 255, 0.5);
+  --under-color2: rgba(0, 200, 255, 0.1);
+}
+
+body {
+  font-family: nulshock, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  
+}
+
+
+
+.token-details-header {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 40px;
+  color: var(--subtext-color);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.token-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease-in-out;
+}
+
+#register {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease-in-out;
+}
+
+li:hover {
+  transform: scale(1.1);
+}
+
+
+
+.token-details {
+  display: none;
+}
+
+.token-item:hover .token-details {
+  display: block;
+}
+
+.token-details-link {
+  display: none;
+}
+
+.token-item:hover .token-details-link {
+  display: inline-block;
+}
+
+
+
+.token-details {
+  position: relative;
+}
+
+.token-total-funds {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.chart-container {
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.separator {
+  height: 30px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  
+  color: var(--subtext-color);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  color: #fff;
+  background-color: var(--under-color);
+}
+
+.symbol-label {
+  color: var(--subtext-color); /* Set the color of the word "Symbol:" */
+  font-weight: bold; /* Optionally set other styles */
+  /* Add any other styles you want for the word "Symbol:" */
+}
+
+.name-label {
+  color: var(--name-color); /* Set the color of the word "Symbol:" */
+  font-weight: bold; /* Optionally set other styles */
+  /* Add any other styles you want for the word "Symbol:" */
+}
+
+
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+ 
+  box-shadow: 0 0px 800px rgba(0, 0, 0, 0.2);
+  
+  position: absolute; /* Position the container absolutely */
+  top: 0; /* Align it to the top of the page */
+  left: 50%; /* Center the container horizontally */
+  transform: translateX(-50%); /* Adjust horizontal positioning */
+  height: auto; /* Set the height to full viewport height minus padding */
+
+  z-index: 1; /* Ensure content is above background */
+}
+
+.logo{
+  height: 250px;
+  width: 250px ;
+
+}
+.logo:hover{
+  cursor: pointer;
+}
+
+.flex-container {
+  display: flex;
+  z-index: -1;
+  flex-direction: row;
+  align-items: flex-start;
+ 
+  height: max-content;
+}
+
+.flex-item {
+  flex: 1; /* Equal width for all items */
+  padding: 20px;
+  text-align: center;
+
+ 
+}
+
+.flex-item-mid {
+  width: 800px;
+  padding: 20px;
+  text-align: center;
+ 
+}
+
+.metaLogo{
+  height: 50px;
+  width: 50px ;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+
+ 
+}
+
+.connectButton{
+ 
+  font-family: nulshock, sans-serif;
+
+
+}
+
+.wholeButton{
+  font-family: nulshock, sans-serif;
+  height: 80px;
+  width: 250px ;
+  border-color: transparent;
+ 
+}
+
+.wholeButton:hover{
+  background-color: var(--under-color);
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.walletArea {
+
+  width: 350px; /* Set the desired static width */
+  margin: 0 auto; /* Center horizontally */
+  text-align: center; /* Center the content inside the div */
+}
+
+
+
+.highlighted {
+  background-color: #ffcc00; /* Change this to the desired background color */
+}
+
+#tokenBalanceList {
+  list-style: none;
+  padding: 0;
+}
+
+#tokenBalanceList li {
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Vertically center items */
+  margin-bottom: 10px;
+}
+
+#tokenBalanceList .token-logo {
+  height: 30px; /* Set the height of the logo */
+  width: auto; /* Maintain aspect ratio */
+  margin-right: 10px;
+}
+
+#tokenBalanceList .token-details-container {
+  flex-grow: 1; /* Allow token details to take up remaining space */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out items evenly */
+  align-items: center; /* Vertically center items */
+}
+
+#tokenBalanceList .token-name,
+#tokenBalanceList .token-balance {
+  border: #777777 solid 1px; /* Add a border */
+  padding: 5px; /* Add padding */
+  margin: 0; /* Remove margins */
+  font-size: 14px; /* Set the font size */
+  color: var(--subtext-color); /* Use the subtext color */
+}
+
+
+
+/* .welcome-text {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+} */
+
+.address-text {
+  font-size: 12px;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+}
+
+.token-item1{
+  padding: 5px;;
+}
+
+.token-item1:hover{
+ background-color: var(--under-color);
+ cursor: pointer;
+ border-radius: 5px;
+ color: white;
+}
+
+.token-name1{
+  color: var(--name-color);
+
+}
+
+
+
+#total-balance-b,
+#already-staked-b,
+#already-borrowed-b,
+#total-balance,
+#already-borrowed,
+#already-staked,
+#total-balance-u,
+#already-staked-u,
+#already-borrowed-u {
+  flex: 1; /* Distribute available space equally among the spans */
+  font-size: 24px; /* Adjust the font size as needed */
+  margin: 50px 50px; /* Adjust the top and bottom margin as needed */
+  text-align: center; /* Center the text horizontally */
+}
+
+#stake-execute-button{
+}
+
+#stake-infos{
+  
+}
+
+
+
+.button-view {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--under-color2);
+  margin-bottom: 20px;
+}
+
+#token-input,
+#fund-input,
+#burn-input,
+#unstake-input,
+#stake-input {
+  text-align: center;
+  font-family: 'nulshock';
+  border: 2px solid #ccc; /* Add a border */
+  border-radius: 10px; /* Add rounded corners */
+  padding: 10px; /* Add padding inside the input */
+  font-size: 16px; /* Increase font size */
+  outline: none; /* Remove default focus outline */
+  transition: border-color 0.3s; /* Add transition effect for border color */
+}
+
+#fund-input:focus,
+#burn-input:focus,
+#unstake-input:focus,
+#stake-input:focus {
+  border-color: var(--under-color); /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a shadow on focus */
+}
+
+.token-header{
+display: flex;
+align-items: center;
+}
+
+.token-name{
+ 
+  margin-right: auto; 
+  padding: 5px; /* Add padding */
+  margin-left: 20px;
+  color: var(--name-color);
+  font-size: 24px;
+}
+.token-logo {
+  height: 70px;
+  width: 70px;
+ 
+}
+
+.token-promise {
+ 
+  height: 70px;
+  width: 70px;
+}
+
+.token-area {
+  height: 70px;
+  width: 70px;
+ 
+}
+
+.active {
+  background-color: var(--under-color2); /* Change the background color to red when active */
+  color: #000000; /* Change the text color to white when active */
+  /* Add any other styles you want to apply when the button is active */
+}
+
+#fundButton{
+  color: gold;
+    font-weight: bold;
+    font-size: 28px;
+}

@@ -1,0 +1,39 @@
+<div class="button-view">
+    <div id="stake-infos-b" class="stake-infos">
+        <p class="descr">To get 100% of funds belonging to the tokens, tokens must be burned/destroyed. This creates deflationary mechanism for project and other holders, while giving a reason to strategize between selling on market, staking, restaking and getting 100% funds and leaving users hold in the company for ever. (currently only fully unstaked tokens can be burned)</p>
+        <P class="separator"></P>
+        <p>Tokens you hold, you staked, ETH you received </p>
+        <p>
+            <div id="balance-container" style="display: flex;">
+            <span id="total-balance-b"></span>
+            <span id="already-staked-b"></span>
+            <span id="already-borrowed-b"></span>
+        </div>
+        </p>
+        <p style="font-size: 10px;">you can always just sell, no need to destroy. But if you really want...</p>
+        <p>let <span><input type="number"  pattern="^\d*(\.\d{0,2})?$" id="burn-input" value="0" step="0.00001"/> </span>  <%= tokenDetails.name %>  Burn !</span></p>
+        <p style="padding: 30px;">
+            you will get
+            <span id="burn-amount-display"> </span> GWEI
+        </p>
+        <p style="padding: 30px;">
+            <a id="burn-execute-button" href="#" class="button">let's do it</a>
+        </p>
+    </div>
+
+</div>
+
+<script src="scriptsBurn.js"></script>
+<script>
+    // Create an object to store token details mapped to token addresses
+    window.tokenDetails = {
+        tokenAddress: '<%= tokenDetails.tokenAddress %>',
+        registryAddress: '<%= tokenDetails.registryAddress %>',
+        name: '<%= tokenDetails.name %>',
+        symbol: '<%= tokenDetails.symbol %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        logoPath: '<%= tokenDetails.logoPath %>',
+        totalFunds: '<%=  tokenDetails.totalFunds %>',
+        totalSupply: '<%=  tokenDetails.totalSupply %>',
+    }
+</script>

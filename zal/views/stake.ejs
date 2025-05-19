@@ -1,0 +1,37 @@
+<div class="button-view">
+    <div id="stake-infos" class="stake-infos">
+        <p>Tokens you hold, you staked, ETH you received </p>
+        <p>
+        <div id="balance-container" style="display: flex;">
+            <span id="total-balance"></span>
+            <span id="already-staked"></span>
+            <span id="already-borrowed"></span>
+        </div>
+        </p>
+
+        <p>(RE)STAKE all and stake <span><input type="number"  pattern="^\d*(\.\d{0,2})?$" id="stake-input" value="0" step="0.00001"/></span> more</span></p>
+        <p style="padding: 30px;">
+            you will get
+            <span id="restake-amount-display"> </span> ETH
+        </p>
+        <p style="padding: 30px;">
+            <a id="stake-execute-button" href="#" class="button">let's do it</a>
+        </p>
+    </div>
+
+</div>
+
+<script src="scriptsStake.js"></script>
+<script>
+    // Create an object to store token details mapped to token addresses
+    window.tokenDetails = {
+        tokenAddress: '<%= tokenDetails.tokenAddress %>',
+        registryAddress: '<%= tokenDetails.registryAddress %>',
+        name: '<%= tokenDetails.name %>',
+        symbol: '<%= tokenDetails.symbol %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        logoPath: '<%= tokenDetails.logoPath %>',
+        totalFunds: '<%=  tokenDetails.totalFunds %>',
+        totalSupply: '<%=  tokenDetails.totalSupply %>',
+    }
+</script>

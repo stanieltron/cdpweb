@@ -1,0 +1,198 @@
+<!-- index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Great tokens</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Add Plotly.js library -->
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
+  <script src="scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.0/dist/web3.min.js"></script>
+</head>
+
+<body>
+
+  <div id="backgroundw" class="flex-container">
+    <div class="flex-item">
+      <div id="logo"> <img href="/" src="/CDI.png" alt="CDI Logo" class="logo"> </div>
+    </div> <!-- Takes the remaining width -->
+    <div class="flex-item-mid">
+
+
+
+      <div class="container" id="container">
+        <div style=" display: flex; flex-direction: column; justify-content: center; text-align: center;">
+        
+          <h1>First ugly demo web :P </h1>
+          <p></p>(contracts deployed on sepolia)</p>
+          
+          <p></p>
+          <p>CDP brings additional utility and value to ANY (currently erc20) token, by providing a possibility to distribute funds (currently just ETH) to all token holders in a specialized way, you can explore in this site.  </p>
+       
+          <p>Projects/tokens permisionlessly joined with CDP differ from the rest, by commitment of becoming a serious revenue seeking business. Sharing it's revenue with it's "stake"(token)holders. Buying token of a project connected to CDP, means becoming a part of a profitable business, not buying a memecoin/useless token and hoping for others pump/fomo </p>
+         
+          <p>This is a new crypto primitive and we hope such an approach will become golden standard during token investement decisions.</p>
+       
+        </div>
+        <p>Besides the main usecase, cdp can be used for any discribution for any reason. Several usecases: </p>
+        <ul class="token-list">
+          <% Object.keys(tokenRegistryData).forEach(tokenAddress=> { %>
+            <% const token=tokenRegistryData[tokenAddress]; %>
+              <li class="token-item">
+                <div class="token-info">
+                  <p class="token-header">
+                    
+                  <span><img src="<%= token.logoPath %>" alt="<%= token.name %> Logo" class="token-logo"></span>
+                  <span class="token-name">
+                      <%= token.name %>
+                   
+                  </span>
+                    <span><img src="<%= token.areaIconPath %>" alt="<%= token.name %> Logo" class="token-area"></span>
+                    <span><img src="<%= token.promiseIconPath %>" alt="<%= token.name %> Logo" class="token-promise"></span>
+                  </p>
+                  <div class="token-details">
+                    <p class="token-symbol-and-funds">
+                      <span class="token-symbol"><strong class="symbol-label">Symbol:</strong>
+                        <%= token.symbol %>
+                      </span>
+                      <span class="token-total-funds"><strong class="symbol-label">Total Funds:</strong>
+                        <%= token.totalFunds %>
+                      </span>
+                    </p>
+                    <p>total funds growth in time</p>
+                    <div id="token-chart-<%= token.tokenAddress %>" class="chart-container"></div>
+                    <div class="token-actions">
+                      <a href="/tokenDetails?token=<%= token.tokenAddress %>" class="button">View Details</a>
+                    </div>
+                  </div>
+                </div>
+
+              </li>
+
+
+
+
+              <script>
+                (function () {
+                  const tokenData = <%- JSON.stringify(token.fundingSums || []) %>;
+              
+                  const now = new Date();
+                  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+              
+                  // Helper to pad missing days
+                  const dateMap = new Map();
+                  tokenData.forEach(f => dateMap.set(f.date.slice(0, 10), f.value)); // Ensure date is in 'YYYY-MM-DD' format
+              
+                  const xValues = [];
+                  const yValues = [];
+                  let lastValue = 0;
+              
+                  // Iterate over each day in the past 30 days
+                  for (let d = new Date(thirtyDaysAgo); d <= now; d.setDate(d.getDate() + 1)) {
+                    const isoDate = d.toISOString().slice(0, 10); // format date as YYYY-MM-DD
+                    xValues.push(new Date(isoDate)); // Convert string to Date object for Plotly
+                    const value = dateMap.has(isoDate) ? dateMap.get(isoDate) : lastValue; // Keep last value if no funding
+                    yValues.push(value);
+                    lastValue = value; // Update lastValue to current day's value
+                  }
+              
+                  // Create the plot trace
+                  const trace = {
+                    x: xValues, // Pass Date objects (Plotly can now interpret them)
+                    y: yValues,
+                    mode: 'lines',
+                    fill: 'tozeroy',
+                    type: 'scatter',
+                    line: {
+                      color: 'rgba(0, 200, 255, 0.5)',
+                      width: 2
+                    },
+                    marker: {
+                      color: 'rgba(255, 0, 0, 0.5)',
+                      opacity: 0.7
+                    }
+                  };
+              
+                  const layout = {
+                    title: 'Funding (ETH / Date)',
+                    xaxis: {
+                      type: 'date', // Specify type as date
+                      tickformat: '%b %d', // Format tick as Month day (e.g., Apr 25)
+                      title: 'Date',
+                      range: [
+                        thirtyDaysAgo.toISOString().slice(0, 10), // Start date for range (30 days ago)
+                        now.toISOString().slice(0, 10) // End date for range (today)
+                      ]
+                    },
+                    yaxis: {
+                      title: 'Cumulative ETH',
+                      zeroline: false
+                    },
+                    margin: {
+                      l: 70,
+                      r: 20,
+                      b: 70,
+                      t: 50,
+                      pad: 40
+                    },
+                    plot_bgcolor: "transparent",
+                    paper_bgcolor: "transparent",
+                    height: 250
+                  };
+              
+                  Plotly.newPlot('token-chart-<%= token.tokenAddress %>', [trace], layout, { displayModeBar: false });
+                })();
+              </script>
+
+              
+                <% }); %>
+        </ul>
+        <li  id="register"> Register yours</li>
+      </div>
+
+    </div>
+    <div class="flex-item">
+      <div class="walletArea">
+        <div id="meta" class="connectButton">
+
+        </div>
+        <div id="whenConnected" style="display: none;">
+          
+          <div id="addressDisplay"></div> <!-- Add a div to display the address -->
+          <div id="fundsDisplay"></div>
+          
+          <div id="tokenBalances">
+            <h3>your part of</h3>
+            <ul id="tokenBalanceList"></ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Takes the remaining width -->
+  </div>
+</body>
+
+</html>
+
+
+
+
+<script>
+  // Create an object to store token details mapped to token addresses
+  window.tokenInfos = {
+    <% Object.keys(tokenRegistryData).forEach(tokenAddress => { %>
+    '<%= tokenRegistryData[tokenAddress].tokenAddress %>': {
+      registryAddress: '<%= tokenRegistryData[tokenAddress].registryAddress %>',
+      name: '<%= tokenRegistryData[tokenAddress].name %>',
+      decimals: '<%= tokenRegistryData[tokenAddress].decimals %>',
+      symbol: '<%= tokenRegistryData[tokenAddress].symbol %>',
+      logoPath: '<%= tokenRegistryData[tokenAddress].logoPath %>',
+      totalFunds: '<%=  tokenRegistryData[tokenAddress].totalFunds %>',
+      totalSupply: '<%=  tokenRegistryData[tokenAddress].totalSupply %>',
+      },
+    <% }); %>
+  };
+</script>

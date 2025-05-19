@@ -1,0 +1,60 @@
+<!-- tokenDetails.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="backgroundw" class="flex-container">
+    <div class="flex-item">
+    </div> <!-- Takes the remaining width -->
+    <div class="flex-item-mid">
+      <div class="container" id="container">
+        <h1 class="token-details-header">
+          <strong class="name-label">Register your token</strong>
+        </h1>
+        
+        <p>
+          <input type="text" id="token-input" placeholder="Enter token address" 
+                 pattern="^0x[a-fA-F0-9]{40}$" title="Enter a valid Ethereum address"/>
+        </p>
+        
+        <p>
+          <span id="token-address-display"></span> 
+        </p>
+        
+        <p style="padding: 30px;">
+          <a id="register-execute-button" href="#" class="button">let's do it</a>
+        </p>
+      </div>
+    </div>
+    <div class="flex-item">
+      <div class="walletArea">
+        <div id="meta" class="connectButton"></div>
+        <div id="whenConnected" style="display: none;">
+          <div id="addressDisplay"></div> <!-- Add a div to display the address -->
+          <div id="fundsDisplay"></div>
+          <div id="tokenBalances">
+            <h3>your part of</h3>
+            <ul id="tokenBalanceList"></ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Takes the remaining width -->
+  </div>
+</body>
+</html>
+
+<script>
+  window.cdtMainAddress = "<%= cdtMainAddress %>";
+
+</script>
+
+<script src="scriptsRegister.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>

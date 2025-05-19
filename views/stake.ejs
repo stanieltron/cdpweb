@@ -1,0 +1,43 @@
+<div class="button-view">
+    <div id="stake-infos" class="stake-infos">
+        <p class="descr">Funds distributed by project are accumulated for each token, all the time. For accumuluation, there is no need to stake the token. However if a token holder want's to get to his part of the accumulated funds, tokens need to be staked.</p>
+        <p class="descr">When staked, user will get 90% of accumulated funds, basically as a 0 % loan. Tokens are no longer in users ownership, to get them back, unstake must happen.</p>
+        <p class="descr">If some tokens are staked, user got his funds in the past and in a meantime additional funds were added, staking 0 more tokens will get him those additional funds</p>
+        <p class="descr">Example: total funds are 100, user stakes 10% of total allocation, receives 9(90% of 10% of total funds) funds. Later:total funds are 200, user receives additional 9 funds, while staking 0 more tokens.(90% of 10% of total added funds). Staking additional tokens will always result in receiving funds in full - tokens already received. </p>
+        <p class="separator"></p>
+        <p>Tokens you hold, you staked, GWEI you received </p>
+        <p>
+            <div id="balance-container" style="display: flex;">
+            <span id="total-balance"></span>
+            <span id="already-staked"></span>
+            <span id="already-borrowed"></span>
+        </div>
+        </p>
+
+        <p>(RE)STAKE all and stake <span><input type="number"  pattern="^\d*(\.\d{0,2})?$" id="stake-input" value="0" step="0.00001"/></span> more</span></p>
+        <p style="padding: 30px;">
+            you will get
+            <span id="restake-amount-display"> </span> GWEI
+        </p>
+        <p style="padding: 30px;">
+            <a id="stake-execute-button" href="#" class="button">let's do it</a>
+        </p>
+    </div>
+
+</div>
+
+<script src="scriptsStake.js"></script>
+<script>
+    // Create an object to store token details mapped to token addresses
+    window.tokenDetails = {
+        tokenAddress: '<%= tokenDetails.tokenAddress %>',
+        registryAddress: '<%= tokenDetails.registryAddress %>',
+        name: '<%= tokenDetails.name %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        symbol: '<%= tokenDetails.symbol %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        logoPath: '<%= tokenDetails.logoPath %>',
+        totalFunds: '<%=  tokenDetails.totalFunds %>',
+        totalSupply: '<%=  tokenDetails.totalSupply %>',
+    }
+</script>

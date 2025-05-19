@@ -1,0 +1,37 @@
+<div class="button-view">
+    <div id="stake-infos" class="stake-infos">
+        <p>Tokens you hold, you staked, you borrowed </p>
+        <p>
+        <div id="balance-container" style="display: flex;">
+            <span id="total-balance-u"></span>
+            <span id="already-staked-u"></span>
+            <span id="already-borrowed-u"></span>
+        </div>
+        </p>
+
+        <p>Reevaluate all and return <span><input type="number" id="unstake-input" value="0" /></span> more</span></p>
+        <p style="padding: 30px;">
+            you will get
+            <span id="unstake-amount-display"> </span> <span><%= tokenDetails.name %></span>
+        </p>
+        <p style="padding: 30px;">
+            <a id="unstake-execute-button" href="#" class="button">let's do it</a>
+        </p>
+    </div>
+
+</div>
+
+<script src="scriptsUnstake.js"></script>
+<script>
+    // Create an object to store token details mapped to token addresses
+    window.tokenDetails = {
+        tokenAddress: '<%= tokenDetails.tokenAddress %>',
+        registryAddress: '<%= tokenDetails.registryAddress %>',
+        name: '<%= tokenDetails.name %>',
+        symbol: '<%= tokenDetails.symbol %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        logoPath: '<%= tokenDetails.logoPath %>',
+        totalFunds: '<%=  tokenDetails.totalFunds %>',
+        totalSupply: '<%=  tokenDetails.totalSupply %>',
+    }
+</script>

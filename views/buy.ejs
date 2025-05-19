@@ -1,0 +1,24 @@
+<div class="button-view">
+    <p>wanto to become a holder in this awesome enterprise?</p>
+    <p class="separator"></p>
+    <p></p>
+    <p class="button" id="buyLink">link1</p>
+    
+</div>
+
+<script src="scriptsBuy.js"></script>
+<script>
+    // Create an object to store token details mapped to token addresses
+    window.tokenDetails = {
+        tokenAddress: '<%= tokenDetails.tokenAddress %>',
+        registryAddress: '<%= tokenDetails.registryAddress %>',
+        name: '<%= tokenDetails.name %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        symbol: '<%= tokenDetails.symbol %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        logoPath: '<%= tokenDetails.logoPath %>',
+        totalFunds: '<%=  tokenDetails.totalFunds %>',
+        totalSupply: '<%=  tokenDetails.totalSupply %>',
+        buyLink: '<%=  tokenDetails.buyLink %>',
+    }
+</script>

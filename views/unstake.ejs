@@ -1,0 +1,43 @@
+<div class="button-view">
+    <div id="stake-infos" class="stake-infos">
+
+        <p class="descr">Unstake is used to get tokens back to the hands of a user. For that, received funds must be returned, to be claimable for future token holder</p>
+        <p class="descr">If some tokens are staked, user got his funds in the past and in a meantime additional funds were added, tokens proportionate to "covering" additional funds can be unstaked, without returning any funds. </p>
+        <p class="descr">Example:  total funds are 100, user stakes 10% of total allocation, receives 9(90% of 10% of total funds) funds. Later:total funds are 200, user can unstake 5% of total allocation without returning funds, since the remaining 5% is enough to cover funds already received</p>
+        <P class="separator"></P>
+        <p>Tokens you hold, you staked, GWEI you received </p>
+        <p>
+            <div id="balance-container" style="display: flex;">
+            <span id="total-balance-u"></span>
+            <span id="already-staked-u"></span>
+            <span id="already-borrowed-u"></span>
+        </div>
+        </p>
+
+        <p>Reevaluate all and return <span><input type="number" id="unstake-input" value="0" /></span> more</span></p>
+        <p style="padding: 30px;">
+            you will get
+            <span id="unstake-amount-display"> </span> <span><%= tokenDetails.name %></span>
+        </p>
+        <p style="padding: 30px;">
+            <a id="unstake-execute-button" href="#" class="button">let's do it</a>
+        </p>
+    </div>
+
+</div>
+
+<script src="scriptsUnstake.js"></script>
+<script>
+    // Create an object to store token details mapped to token addresses
+    window.tokenDetails = {
+        tokenAddress: '<%= tokenDetails.tokenAddress %>',
+        registryAddress: '<%= tokenDetails.registryAddress %>',
+        name: '<%= tokenDetails.name %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        symbol: '<%= tokenDetails.symbol %>',
+        decimals: '<%= tokenDetails.decimals %>',
+        logoPath: '<%= tokenDetails.logoPath %>',
+        totalFunds: '<%=  tokenDetails.totalFunds %>',
+        totalSupply: '<%=  tokenDetails.totalSupply %>',
+    }
+</script>
