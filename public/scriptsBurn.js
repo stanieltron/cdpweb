@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const burnAmountFloat = parseFloat(burnInput.value)
  let burnAmount = BigInt(burnAmountFloat * 10 ** 5) *  BigInt(10 ** (tokenDetails.decimals-5))
+ console.log("burnAmount", burnAmount)
         try {
             // Send the transaction to the contract
             const receipt = await registryContract.methods.burn(burnAmount).send({ from: account });

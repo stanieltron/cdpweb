@@ -49,7 +49,8 @@ app.set('view engine', 'ejs');
 
 // Define a route to render the index page
 app.get('/', async (req, res) => {
-  await fetchCommonData();
+  const force = req.query.force === 'true';
+  await fetchCommonData(force);
   console.log("allRegisteredTokens",allRegisteredTokens)
   console.log("allRegistries",allRegistries)
   console.log("allFundings",allFundings)
@@ -179,7 +180,7 @@ async function getFundingsForContract(tokenAddress) {
       amount: entry.amount,
     });
   }
-
+  console.log(entries)
   // Step 2: Use latest block as reference
   const latestBlock = await web3.eth.getBlock("latest");
   const latestBlockNumber = Number(latestBlock.number);
@@ -205,32 +206,33 @@ async function getFundingsForContract(tokenAddress) {
   }
 
   // Step 4: Calculate cumulative sums and prepare data
-  const fundingSums = [];
-  let cumulativeSum = 0;
-  
+  const fundings = [];
+
   const uniqueDates = Array.from(groupedByDay.keys()).sort();
   
   for (const date of uniqueDates) {
     const dailySum = groupedByDay.get(date);
-    cumulativeSum += dailySum;
-    
-    fundingSums.push({
+  
+    fundings.push({
       date,
-      value: cumulativeSum
+      value: dailySum
     });
   }
 
-  console.log("funding sums with dates", fundingSums);
-  return fundingSums;
+  console.log("funding with dates", fundings);
+  return fundings;
 }
 
 function getFundingSums(fundings) {
   console.log("fundings", fundings);
   try {
     const fundingSums = [];
+    let cumulativeSum = 0;
 
-    // Simply return the already computed funding sums from the first function
-    fundingSums.push(...fundings); 
+    for (const { date, value } of fundings) {
+      cumulativeSum += Number(value);
+      fundingSums.push({ date, value: cumulativeSum });
+    }
 
     console.log("funding sums with dates", fundingSums);
     return fundingSums;
@@ -239,6 +241,8 @@ function getFundingSums(fundings) {
     throw error;
   }
 }
+
+
 
 function getTokenBuyLink(tokenName) {
   // Map token names to their corresponding logo paths
@@ -370,86 +374,76 @@ function removeBannedTokens(registeredTokens, bannedTokens) {
   return registeredTokens;
 }
 
-async function fetchCommonData() {
-  console.log("Fetching data from Ethereum network...");
-    // Check if the connection to Ganache is successful
-    const ganacheIsListening = await web3.eth.net.isListening();
-    console.log("Ganache is listening:", ganacheIsListening);
+let cacheTimestamp = 0;
+const CACHE_TTL_MS = 60* 60 * 1000; // 60 minutes
 
-    if (!ganacheIsListening) {
-      // Display an error message if the connection to Ganache is not working
-      res.render('error', { message: 'Connection to Ganache is not working.' });
-      return;
+async function fetchCommonData(forceRefresh = false) {
+  const now = Date.now();
+
+  if (!forceRefresh && (now - cacheTimestamp < CACHE_TTL_MS) && Object.keys(tokenRegistryData).length > 0) {
+    console.log('Using cached token data.');
+    return;
+  }
+
+  console.log('Fetching data from Ethereum network...');
+  const ganacheIsListening = await web3.eth.net.isListening();
+  if (!ganacheIsListening) throw new Error('Connection to Ganache is not working.');
+
+  const cdtMain = new web3.eth.Contract(cdtMainABI, cdtMainAddress);
+  let registeredTokens = await cdtMain.methods.getAllTokenRegistryEntries().call();
+  registeredTokens = removeBannedTokens(registeredTokens, bannedTokens);
+
+  latestBlockNumber = await web3.eth.getBlockNumber();
+  allRegisteredTokens = [];
+  allRegistries = [];
+  allFundings = [];
+
+  for (let i = 0; i < registeredTokens[0].length; i++) {
+    const tokenAddress = registeredTokens[0][i];
+    const registryAddress = registeredTokens[1][i];
+
+    // Skip if we already have data for this token
+    if (tokenRegistryData[tokenAddress]) {
+      continue;
     }
 
-    console.log("Connected to Ganache.");
-    console.log("C.");
-    // Initialize contracts
-    const cdtMain = new web3.eth.Contract(cdtMainABI, cdtMainAddress);
-    console.log("C.");
-    // Call the getAllTokenRegistryEntries function of the cdtMain contract
-    let registeredTokens = await cdtMain.methods.getAllTokenRegistryEntries().call();
-    console.log("C.");
-    console.log("registeredTokens", registeredTokens);
+    const tokenContract = new web3.eth.Contract(ERC20ABI, tokenAddress);
+    const [name, symbol, totalSupply, decimals] = await Promise.all([
+      tokenContract.methods.name().call(),
+      tokenContract.methods.symbol().call(),
+      tokenContract.methods.totalSupply().call(),
+      tokenContract.methods.decimals().call()
+    ]);
 
-    registeredTokens = removeBannedTokens(registeredTokens, bannedTokens)
-    console.log("C.");
-    console.log("registeredTokens", registeredTokens);
+    const fundings = await getFundingsForContract(registryAddress);
+    const fundingSums = getFundingSums(fundings);
 
-     latestBlockNumber = await web3.eth.getBlockNumber();
-    
+    const registryContract = new web3.eth.Contract(cdtTokenRegistryABI, registryAddress);
+    let totalFunds = await registryContract.methods.getTotalFunds().call();
+    totalFunds = (Number(totalFunds) / 10 ** 18).toFixed(4);
 
-     allRegisteredTokens = [];
-     allRegistries = [];
-     allFundings = [];
-     console.log("D.");
-    // Fetch additional information for each ERC20 token
-    for (let i = 0; i < registeredTokens[0].length; i++) {
-     // console.log("AAAAAAAAAAAAA",registeredTokens[0][i])
-      const tokenAddress = registeredTokens[0][i];
-      //  console.log("Fetching data for token at address:", tokenAddress);
-      const tokenContract = new web3.eth.Contract(ERC20ABI, tokenAddress);
+    tokenRegistryData[tokenAddress] = {
+      tokenAddress,
+      registryAddress,
+      name,
+      symbol,
+      decimals,
+      totalSupply: totalSupply.toString(),
+      totalFunds: totalFunds.toString(),
+      fundingSums,
+      fundings,
+      logoPath: getTokenLogoPath(name),
+      description: getTokenDescription(name),
+      areaIconPath: getTokenAreaIcon(name),
+      promiseIconPath: getTokenPromiseIcon(name),
+      buyLink: getTokenBuyLink(name)
+    };
+  }
 
-      const [name, symbol, totalSupply, decimals] = await Promise.all([
-        tokenContract.methods.name().call(),
-        tokenContract.methods.symbol().call(),
-        tokenContract.methods.totalSupply().call(),
-        tokenContract.methods.decimals().call()
-      ]);
-     
-
-      const fundings = await getFundingsForContract( registeredTokens[1][i]);
-      
-      let fundingSums = await getFundingSums(fundings);
-     
-      const registryAddress = registeredTokens[1][i]
-      const registryContract = new web3.eth.Contract(cdtTokenRegistryABI, registryAddress);
-      var totalFunds = 0;
-      totalFunds = await registryContract.methods.getTotalFunds().call();
-      totalFunds = (Number(totalFunds) / 10 ** 18).toFixed(4);
-
-
-
-     
-      tokenRegistryData[tokenAddress] = {
-        tokenAddress,
-        registryAddress,
-        name,
-        symbol,
-        decimals,
-        totalSupply: totalSupply.toString(),
-        totalFunds: totalFunds.toString(),
-        fundingSums,
-        fundings,
-        logoPath: getTokenLogoPath(name),
-        description: getTokenDescription(name),
-        areaIconPath: getTokenAreaIcon(name),
-        promiseIconPath: getTokenPromiseIcon(name),
-        buyLink: getTokenBuyLink(name)
-      };
-
-    }
+  cacheTimestamp = now;
+  console.log('Token data refreshed and cached.');
 }
+
 
 function doo(string)  {
   console.log("doo fn",string)

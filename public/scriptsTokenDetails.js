@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const unstakeContainer = document.getElementById("unstakeContainer");
     unstakeButton.addEventListener("click", handleUnstakeButtonClick);
 
-    const burnButton = document.getElementById("burnButton");
-    const burnContainer = document.getElementById("burnContainer");
-    burnButton.addEventListener("click", handleBurnButtonClick);
+    // const burnButton = document.getElementById("burnButton");
+    // const burnContainer = document.getElementById("burnContainer");
+    // burnButton.addEventListener("click", handleBurnButtonClick);
     // Function to connect to MetaMask and return the connected address
 
     const buyButton = document.getElementById("buyButton");
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (stakeContainer.style.display === "none") {
             stakeContainer.style.display = "block";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+         //   burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.add("active"); // Add the "active" class
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+         //   burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (unstakeContainer.style.display === "none") {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "block";
-            burnContainer.style.display = "none";
+         //   burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+          //  burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (burnContainer.style.display === "none") {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "block";
+         //   burnContainer.style.display = "block";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+        //    burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (burnContainer.style.display === "none") {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+         //   burnContainer.style.display = "none";
             buyContainer.style.display = "block";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+         //   burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (burnContainer.style.display === "none") {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+         //   burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "block";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             stakeContainer.style.display = "none";
             unstakeContainer.style.display = "none";
-            burnContainer.style.display = "none";
+          //  burnContainer.style.display = "none";
             buyContainer.style.display = "none";
             fundContainer.style.display = "none";
             stakeButton.classList.remove("active"); // Remove the "active" class
@@ -208,14 +208,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 fundButton.style.display = "inline";
                 stakeButton.style.display = "inline";
                 unstakeButton.style.display = "inline";
-                burnButton.style.display = "inline";
+              //  burnButton.style.display = "none";
             } else {
                 // Display only buy and fund buttons if balance is 0 or less
                 buyButton.style.display = "inline";
                 fundButton.style.display = "inline";
                 stakeButton.style.display = "none";
                 unstakeButton.style.display = "none";
-                burnButton.style.display = "none";
+             //   burnButton.style.display = "none";
             }
         } else {
             // MetaMask is not connected
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fundButton.style.display = "inline";
             stakeButton.style.display = "none";
             unstakeButton.style.display = "none";
-            burnButton.style.display = "none";
+          //  burnButton.style.display = "none";
         }
     }
    

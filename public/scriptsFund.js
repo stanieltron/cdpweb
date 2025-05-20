@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             // Transaction successful
             console.log("Transaction successful:", receipt);
             setTimeout(() => {
-                window.location.reload();
+              window.location.href = '/?force=true'
             }, 100); // Wait for one second before scrolling
            
         } catch (error) {

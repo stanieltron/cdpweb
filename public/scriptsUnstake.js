@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById("already-borrowed-u").innerText = alreadyBorrowedFormatted;
 
         var returnAmount = parseFloat(unstakeInput.value).toFixed(5);
-       
-        const rereturnAmount = await registryContract.methods.calculateUnstake(account,BigInt(returnAmount*10**5) * BigInt(10 ** 13)).call();
+        console.log("unstakeInput.value: ", unstakeInput.value)
+        const rereturnAmount = await registryContract.methods.calculateUnstake(account,BigInt(returnAmount*10**9)).call();
 
         const rereturnAmountFormatted = (rereturnAmount / 10 ** tokenDetails.decimals).toFixed(5);
         document.getElementById("unstake-amount-display").innerText = rereturnAmountFormatted;
@@ -89,9 +89,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const registryContractAddress = tokenDetails.registryAddress; 
         const registryContract = new web3.eth.Contract(cdtTokenRegistryABI, registryContractAddress);
-        console.log("unstakeInput.value: ", unstakeInput.value)
+        
         const returnAmount = parseFloat(unstakeInput.value);
-        const returnAmountInWei = BigInt(returnAmount*10**5) * BigInt(10 ** 13)
+        const returnAmountInWei = BigInt(returnAmount) * BigInt(10 ** 9)
         const txObject = registryContract.methods.unstakeByBorrowedAmount();
         
 

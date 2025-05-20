@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function () {
       userFundsEligibleForStake = userFundsEligibleForStake / 1000000000
       userFundsEligible = userFundsEligible / 1000000000
       const fundsText = userFundsEligible + " (" +  userFundsEligibleForStake + ") GWEI";
-      fundsDisplay.innerHTML = `<span class="welcome-text"><h3>Your Potential</h3></span> <span class="address-text">${fundsText}</span>`;
+      fundsDisplay.innerHTML = `<span class="welcome-text"><h3>Your unstaked potential</h3></span> <span class="address-text">${fundsText}</span>`;
 
     } else {
       //window.ethereum.disconnect()
@@ -560,7 +560,7 @@ async function showButtons() {
         const fundButton = document.getElementById("fundButton");
         const stakeButton = document.getElementById("stakeButton");
         const unstakeButton = document.getElementById("unstakeButton");
-        const burnButton = document.getElementById("burnButton");
+      //  const burnButton = document.getElementById("burnButton");
         if (connectedAddress) {
             // MetaMask is connected
            
@@ -570,14 +570,14 @@ async function showButtons() {
                 fundButton.style.display = "inline";
                 stakeButton.style.display = "inline";
                 unstakeButton.style.display = "inline";
-                burnButton.style.display = "inline";
+             //   burnButton.style.display = "inline";
             } else {
                 // Display only buy and fund buttons if balance is 0 or less
                 buyButton.style.display = "inline";
                 fundButton.style.display = "inline";
                 stakeButton.style.display = "none";
                 unstakeButton.style.display = "none";
-                burnButton.style.display = "none";
+             //   burnButton.style.display = "none";
             }
         } else {
             // MetaMask is not connected
@@ -586,7 +586,7 @@ async function showButtons() {
             fundButton.style.display = "inline";
             stakeButton.style.display = "none";
             unstakeButton.style.display = "none";
-            burnButton.style.display = "none";
+         //   burnButton.style.display = "none";
         }
       }
     }
